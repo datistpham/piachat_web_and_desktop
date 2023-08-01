@@ -11,14 +11,13 @@ function createWindow () {
     }
   })
 
-  win.loadURL('http://localhost:3000')
+  win.loadURL('https://piachat-web-and-desktop.vercel.app')
 
   win.webContents.openDevTools()  
 }
 
 app.whenReady().then(() => {
   createWindow()
-
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()

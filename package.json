@@ -72,9 +72,15 @@
   },
   "build": {
     "appId": "com.example.my-electron-app",
-    "productName": "My Electron App",
+    "productName": "Pia chat",
     "directories": {
       "output": "dist"
+    },
+    "mac": {
+      "icon": "assets/icon.png" 
+    },
+    "win": {
+      "icon": "assets/icon.png"  
     }
   },
   "eslintConfig": {
