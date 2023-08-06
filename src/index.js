@@ -19,11 +19,6 @@ const initConfig = {
 
 export default async function runOneSignal() {
   await OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172', allowLocalhostAsSecureOrigin: true});
-  OneSignal.push(function () {
-    OneSignal.SERVICE_WORKER_PARAM = { scope: '/push/onesignal/' };
-    OneSignal.SERVICE_WORKER_PATH = 'push/onesignal/OneSignalSDKWorker.js'
-    OneSignal.init(initConfig);
-});
   OneSignal.showSlidedownPrompt();
 }
 
