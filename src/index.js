@@ -10,10 +10,16 @@ import Image from './Component/Media/Image';
 import { SnackbarProvider } from 'notistack';
 import { createRoot } from 'react-dom/client';
 import splashImage from "./assets/splash.png"
+import OneSignal from 'react-onesignal';
+
+OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172' });
+
 const App= lazy(()=> import("./App"))
 
 const EntryApp= ()=> {
-
+  OneSignal.on('subscriptionChange', function(isSubscribed) {
+    console.log("The user's subscription state is now:", isSubscribed);
+  });
   return (
     <>
       {/* <AliveScope> */}
