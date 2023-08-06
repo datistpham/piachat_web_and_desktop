@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import './index.css';
 import "./a.sass"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,11 +12,19 @@ import { createRoot } from 'react-dom/client';
 import splashImage from "./assets/splash.png"
 import OneSignal from 'react-onesignal';
 
-OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172' });
+// OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172' , allowLocalhostAsSecureOrigin: true});
+
+export default async function runOneSignal() {
+  await OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172', allowLocalhostAsSecureOrigin: true});
+  OneSignal.showSlidedownPrompt();
+}
 
 const App= lazy(()=> import("./App"))
 
 const EntryApp= ()=> {
+  useEffect(()=> {
+    runOneSignal()
+  }, [])
   OneSignal.on('subscriptionChange', function(isSubscribed) {
     console.log("The user's subscription state is now:", isSubscribed);
   });
