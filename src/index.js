@@ -13,9 +13,17 @@ import splashImage from "./assets/splash.png"
 import OneSignal from 'react-onesignal';
 
 // OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172' , allowLocalhostAsSecureOrigin: true});
+const initConfig = {
+  appId: "5182f563-4f60-40c8-9e60-50618ffdc172"
+};
 
 export default async function runOneSignal() {
   await OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172', allowLocalhostAsSecureOrigin: true});
+  OneSignal.push(function () {
+    OneSignal.SERVICE_WORKER_PARAM = { scope: '/push/onesignal/' };
+    OneSignal.SERVICE_WORKER_PATH = 'push/onesignal/OneSignalSDKWorker.js'
+    OneSignal.init(initConfig);
+});
   OneSignal.showSlidedownPrompt();
 }
 
@@ -25,9 +33,7 @@ const EntryApp= ()=> {
   useEffect(()=> {
     runOneSignal()
   }, [])
-  OneSignal.on('subscriptionChange', function(isSubscribed) {
-    console.log("The user's subscription state is now:", isSubscribed);
-  });
+  
   return (
     <>
       {/* <AliveScope> */}
