@@ -7,7 +7,7 @@ const get_files_conversation= async (conversationId, setData)=> {
         url: SERVER_URL+ "/api/conversations/get-files/" + conversationId,
         method: "get",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

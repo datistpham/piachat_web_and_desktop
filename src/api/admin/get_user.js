@@ -7,7 +7,7 @@ const get_user= async ()=> {
         url: SERVER_URL+ "/api/admin/user",
         method: "get",
         headers: {
-            "authorization": Cookies.get("uid")
+            "authorization": localStorage.getItem("uid")
         }
     })
     const result= await res.data

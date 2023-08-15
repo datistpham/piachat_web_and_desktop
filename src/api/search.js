@@ -7,7 +7,7 @@ const search= async (keyword, setData)=> {
         url: `${SERVER_URL}/api/conversations/search/${keyword}`,
         method: "post", 
         data: {
-            userId: Cookies.get("uid")
+            userId: localStorage.getItem("uid")
         }
     })
     const result= await res.data

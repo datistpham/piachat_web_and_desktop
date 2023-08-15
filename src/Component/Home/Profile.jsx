@@ -35,7 +35,7 @@ const Profile = () => {
   useEffect(()=> {
     
     socketState?.on("new_request_friend", data=> {
-      if(Cookies.get("uid")=== data?.destination_user_id) {
+      if(localStorage.getItem("uid")=== data?.destination_user_id) {
         setNewRequestFriends(prev=> (_.set([...prev, data?.sender_user_id])))
       }
     })
@@ -43,7 +43,7 @@ const Profile = () => {
 
   const handleBeforeUnload= (e)=> {
     e.preventDefault()
-    update_seen_request(Cookies.get("uid"), parseInt(newRequestFriends.length) + unSeenDefault)
+    update_seen_request(localStorage.getItem("uid"), parseInt(newRequestFriends.length) + unSeenDefault)
   }
   const handleClose= ()=> {
     setOpen(()=>  false)
@@ -99,7 +99,7 @@ const ToFriendPage= (props)=> {
       <div onClick={()=> {
         navigate("/friends")
         setSeenAll(()=> true)
-        update_seen_request(Cookies.get("uid"), 0)
+        update_seen_request(localStorage.getItem("uid"), 0)
         props?.setUnSeenDefault(0)
         props?.setNewRequestFriends([])
 

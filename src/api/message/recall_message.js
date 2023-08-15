@@ -7,7 +7,7 @@ const recall_message = async(keyId, message) => {
         url: SERVER_URL+ "/api/messages/recall/message/"+ keyId,
         method: "post", 
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
             message

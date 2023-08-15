@@ -29,11 +29,11 @@ const VideoCallComponent = (props) => {
                 url: SERVER_URL+ "/api/live/create/uid",
                 method: "get",
                 headers: {
-                  "authorization": "Bearer "+ Cookies.get("accessToken")
+                  "authorization": "Bearer "+ localStorage.getItem("accessToken")
 
                 },
                 params: {
-                  appId, appCertificate, account: Cookies.get("uid")
+                  appId, appCertificate, account: localStorage.getItem("uid")
                 }
               })
               const result1= await res1.data
@@ -42,7 +42,7 @@ const VideoCallComponent = (props) => {
                   url: SERVER_URL+ "/api/live/get_token",
                   method: "get",
                   headers: {
-                      "authorization": "Bearer "+ Cookies.get("accessToken")
+                      "authorization": "Bearer "+ localStorage.getItem("accessToken")
                   },
                   params: {
                     appId, channelName, appCertificate, uid: result1.uid

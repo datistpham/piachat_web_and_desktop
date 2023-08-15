@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import React, { memo, useContext } from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -22,9 +22,11 @@ const List = (props) => {
     useEffect(()=> {
         (async ()=> {
             const result= await get_list_conversation()
+            // socketState.emit("join_each_room_conversation",)
+            result?.filter(item=> item?.id_conversation && item?.id_conversation?.length > 0)?.map(item=> socketState.emit("join_each_room_conversation", {roomId: item?.id_conversation}))
             setData(_.sortBy(result?.filter(item=> item.member.length > 1 || (item.member.length > 0 && item?.label?.length > 0)), function(e) {return moment(e.lastUpdate).valueOf()}))
         })()
-    }, [props?.change, props.is_friend_page])
+    }, [props?.change, props.is_friend_page, socketState])
     // useEffect(()=> {
     //     if(data.length > 0) {
     //         socketState.on("send_new_message_from_server", (data2)=> {
@@ -141,17 +143,13 @@ const ItemList= memo((props)=> {
     const [newMessageSignal, setNewMessageSignal]= useState(false)
 
     useEffect(()=> {
-        if(idConversation && socketState && props?.id_conversation) {
-            if(idConversation!==props?.id_conversation) {
-                socketState.on("send_new_message_from_server", (data)=> {
-                    
-                    if(data?.idConversation === props?.id_conversation && data?.idConversation!== idConversation && idConversation!==props?.id_conversation)  {
-                        setNewMessageSignal(()=> true)
-                    }
-                })
-            }
+        if(socketState && props?._id) {
+            socketState.once("receive_notification_from_server", (data)=> {
+                if(data?.roomId === props?._id)
+                setNewMessageSignal(()=> true)
+            })
         }
-    }, [idConversation, props?.id_conversation])
+    }, [props?._id, socketState])
 
     return (
         <NavLink onClick={()=> {
@@ -178,7 +176,7 @@ const ItemList= memo((props)=> {
 export const ImageItemList= (props)=> {
     return (
         <div className={"djklsjkdjvsdddasa"} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <img src={props?.imageGroup ? props?.imageGroup : (props?.member?.filter(item=> item?._id !== Cookies.get("uid"))?.[0]?.profilePicture?.length > 0 ? props?.member?.filter(item=> item?._id !== Cookies.get("uid"))?.[0]?.profilePicture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")} alt="" style={{width: 56, height: 56, objectFit: "cover", borderRadius: "50%"}} />
+            <img src={props?.imageGroup ? props?.imageGroup : (props?.member?.filter(item=> item?._id !== localStorage.getItem("uid"))?.[0]?.profilePicture?.length > 0 ? props?.member?.filter(item=> item?._id !== localStorage.getItem("uid"))?.[0]?.profilePicture : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")} alt="" style={{width: 56, height: 56, objectFit: "cover", borderRadius: "50%"}} />
         </div>
     )
 }
@@ -187,7 +185,7 @@ export const Name= (props)=> {
     return (
         <div className={"fjklsajkjfksaasafsd"} style={{display: "flex", alignItems: "center"}}>
             <div className={"fldsajkjdfkldjasa"} style={{fontSize: 18}}>
-                {props?.label ? props?.label : (props?.member?.filter(item=> item?._id !== Cookies.get("uid"))?.[0]?.username?.length > 0 ? props?.member?.filter(item=> item?._id !== Cookies.get("uid"))?.[0]?.username : "Anonymous") }
+                {props?.label ? props?.label : (props?.member?.filter(item=> item?._id !== localStorage.getItem("uid"))?.[0]?.username?.length > 0 ? props?.member?.filter(item=> item?._id !== localStorage.getItem("uid"))?.[0]?.username : "Anonymous") }
             </div>
         </div>
     )

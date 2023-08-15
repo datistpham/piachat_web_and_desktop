@@ -7,10 +7,10 @@ const delete_member_id = async (memberId, conversationId,setData) => {
         url: SERVER_URL+ "/api/conversations/delete-member/"+ memberId,
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
-            userId: Cookies.get("uid"),
+            userId: localStorage.getItem("uid"),
             conversationId
         }
     })

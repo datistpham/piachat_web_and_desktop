@@ -32,7 +32,7 @@ const update_info_user = async (
     url: `${SERVER_URL}/api/users/edit-infor/${id}`,
     method: "post",
     headers: {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
+      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
     data: {
       newUsername: newUsername,

@@ -7,7 +7,7 @@ const make_conversation= async (label, member, createdBy, imageGroup,setData, na
         url: `${SERVER_URL}/api/conversations`,
         method: "post",
         headers: {
-            "authorization": "Bearer "+Cookies.get("accessToken")
+            "authorization": "Bearer "+localStorage.getItem("accessToken")
         },
          data: {
             label, member, createdBy, imageGroup, type

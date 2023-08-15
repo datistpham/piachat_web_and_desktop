@@ -13,9 +13,9 @@ import splashImage from "./assets/splash.png"
 import OneSignal from 'react-onesignal';
 
 // OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172' , allowLocalhostAsSecureOrigin: true});
-const initConfig = {
-  appId: "5182f563-4f60-40c8-9e60-50618ffdc172"
-};
+// const initConfig = {
+//   appId: "5182f563-4f60-40c8-9e60-50618ffdc172"
+// };
 
 export default async function runOneSignal() {
   await OneSignal.init({ appId: '5182f563-4f60-40c8-9e60-50618ffdc172', allowLocalhostAsSecureOrigin: true});
@@ -28,6 +28,11 @@ const EntryApp= ()=> {
   useEffect(()=> {
     runOneSignal()
   }, [])
+  useEffect(()=> {
+    if(localStorage.getItem("appdesktop")== "true") {
+      document.title= "Pia chat"
+    }
+  }, [])  
   
   return (
     <>

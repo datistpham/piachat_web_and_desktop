@@ -7,7 +7,7 @@ const update_seen_request= async(id, un_seen)=> {
             url: `${SERVER_URL}/api/users/update_seen_request/${id}`,
             method: "post",
             headers: {
-                'authorization': `Bearer ${Cookies.get("accessToken")}`
+                'authorization': `Bearer ${localStorage.getItem("accessToken")}`
             },
             data: {
                 un_seen

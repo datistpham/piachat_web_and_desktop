@@ -7,7 +7,7 @@ const add_member_to_group = async (conversationId, newMember, setData) => {
         url: SERVER_URL+ "/api/conversations/add-member-group/"+ conversationId,
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
             member: newMember

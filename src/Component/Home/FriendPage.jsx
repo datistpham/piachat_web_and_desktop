@@ -51,7 +51,7 @@ const ComponentRequestToMe= (props)=> {
   const [data, setData]= useState(()=> [])
   const [change, setChange]= useState(()=> false)
   useEffect(()=> {
-    update_seen_request(Cookies.get("uid"), 0)
+    update_seen_request(localStorage.getItem("uid"), 0)
   }, [])
   useEffect(()=> {
     get_list_user_request_make_friend_to_me(setData)

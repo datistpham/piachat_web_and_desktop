@@ -7,7 +7,7 @@ const get_info_detail_conversation = async (idConversation, setData) => {
     url: SERVER_URL+ "/api/conversations/detail/"+ idConversation,
     method: "get",
     headers: {
-        "authorization": "Bearer "+ Cookies.get("accessToken")
+        "authorization": "Bearer "+ localStorage.getItem("accessToken")
     }
   })
   const result= await res.data

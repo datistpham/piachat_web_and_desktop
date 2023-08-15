@@ -1,13 +1,13 @@
 import axios from "axios"
-import Cookies from "js-cookie"
+// import Cookies from "js-cookie"
 import { SERVER_URL } from "../../config/config"
 
 const get_list_conversation=async ()=> {
     const res=await axios({
-        url: `${SERVER_URL}/api/conversations/${Cookies.get("uid")}`,
+        url: `${SERVER_URL}/api/conversations/${localStorage.getItem("uid")}`,
         method: "get",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

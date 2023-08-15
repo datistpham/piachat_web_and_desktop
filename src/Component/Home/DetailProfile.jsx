@@ -87,7 +87,9 @@ const DetailProfile = (props) => {
               alignItems: "center",
             }}
           >
-            <strong ref={ref}>Thông tin tài khoản</strong>
+            <strong onClick={()=> {
+              socketState.emit("test_app_electron", {data: 1})
+            }} ref={ref}>Thông tin tài khoản</strong>
             <div
               style={{
                 display: "flex",
@@ -272,7 +274,7 @@ const DetailProfile = (props) => {
                 <button
                   onClick={async () => {
                     const result = await update_info_user(
-                      Cookies.get("uid"),
+                      localStorage.getItem("uid"),
                       newUsername,
                       newProfilePicture,
                       newGender,
@@ -285,7 +287,7 @@ const DetailProfile = (props) => {
                     );
                     if (result?.status === 200) {
                       socketState?.emit("update_profile_user", {
-                        meId: Cookies.get("uid"),
+                        meId: localStorage.getItem("uid"),
                       });
                       if (parseInt(result?.status) === 200) {
                         enqueueSnackbar(result?.msg, {
@@ -328,9 +330,18 @@ const DetailProfile = (props) => {
 export const AdvancedSettings = (props) => {
   const [check, setCheck] = useState(false);
   const { setChange } = useContext(AppContext);
+  const {socketState }= useContext(SocketContainerContext)
+
   useEffect(() => {
     setCheck(props?.user?.isDeaf || false);
   }, [props?.user?.isDeaf]);
+  
+  useEffect(()=> {
+    socketState.on("toggle_notification_server", data=> {
+      setCheck(data?.is_notification)
+    })
+  }, [socketState])
+
   return (
     <div style={{ width: "100%", padding: 10 }}>
       <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 12 }}>
@@ -344,6 +355,7 @@ export const AdvancedSettings = (props) => {
             setChange((prev) => !prev);
             setCheck((prev) => !prev);
             deaf_user(!check);
+            socketState.emit("toggle_notification", {is_notification: !check, meId: localStorage.getItem("uid")})
           }}
         />
         <label style={{ marginLeft: 8 }} htmlFor="cheese-status">

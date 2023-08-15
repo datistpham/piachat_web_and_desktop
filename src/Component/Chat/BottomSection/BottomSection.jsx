@@ -4,6 +4,7 @@ import { SocketContainerContext } from "../../../SocketContainer/SocketContainer
 import TypingEffect from "../../TypingEffect/TypingEffect";
 import ChooseFile from "./ChooseFile";
 import SendButton from "./SendButton";
+import { AppContext } from "../../../App";
 // import TypingText from "./TypingText";
 
 const BottomSection = memo((props) => {
@@ -11,19 +12,27 @@ const BottomSection = memo((props) => {
     const [typing, setTyping] = useState(false);
     const [userTyping, setUserTyping] = useState();
     const { socketState } = useContext(SocketContainerContext);
+    const {data }= useContext(AppContext)
     const [unSeenMessage, setUnSeenMessage]= useState(()=> 0)
     useEffect(() => {
       socketState.on("broadcast_to_all_user_in_room_typing", (data) => {
-        setTyping(data.data.typing);
-        setUserTyping(data.data.data.username);
+        if(data?.data?.roomId === idConversation) {
+          setTyping(data.data.typing);
+          setUserTyping(data.data.data.username);
+        }
+        else {
+          setTyping(false)
+        }
       });
-    }, [socketState]);
+      return ()=> setTyping(false)
+    }, [socketState, idConversation]);
     const sendNewMessage= ()=> {
       setUnSeenMessage(prev=> parseInt(prev) + 1)
-      socketState.emit("send_new_message", {roomId: idConversation, idConversation, unSeenMessage: parseInt(unSeenMessage) + 1})
+      console.log(data)
+      socketState.emit("send_new_message", {roomId: idConversation, idConversation, unSeenMessage: parseInt(unSeenMessage) + 1, data, senderId: localStorage.getItem("uid"), message: props?.contentText})
     }
     const newestMessage= ()=> {
-      socketState.emit("update_newest_message", {roomId: idConversation, lastUpdate: new Date().toLocaleString("en-US", { timeZone: 'Asia/Ho_Chi_Minh' })})
+      socketState.emit("update_newest_message", {roomId: idConversation, lastUpdate: new Date().toLocaleString("en-US", { timeZone: 'Asia/Ho_Chi_Minh' }), idConversation, unSeenMessage: parseInt(unSeenMessage) + 1, data, senderId: localStorage.getItem("uid"), message: props?.contentText})
     }
     
     return (

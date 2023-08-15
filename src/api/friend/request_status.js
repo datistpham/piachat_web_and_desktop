@@ -7,10 +7,10 @@ const get_friend_status= async (idUser)=> {
         url: `${SERVER_URL}/api/users/request/status/`+ idUser,
         method: "get",
         params: {
-            userId: Cookies.get("uid")
+            userId: localStorage.getItem("uid")
         },
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

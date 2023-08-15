@@ -10,7 +10,7 @@ const text_to_voice= async (text)=> {
             text
         },
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

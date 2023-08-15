@@ -21,7 +21,8 @@ const SendButton = (props) => {
   const sendMessage= ()=> {
     socketState.emit("message_from_client", {message: props.contentText, roomId: idConversation, sender: data, type_message: "text", key: keyMessage, createdAt: new Date()})
     socketState.emit("typing_from_client_off", {roomId: idConversation, data, typing: false})
-    post_message(Cookies.get("uid"), idConversation, keyMessage, props.contentText, idConversation, "text")
+    socketState.emit("send_notification_to_room", {roomId: idConversation})
+    post_message(localStorage.getItem("uid"), idConversation, keyMessage, props.contentText, idConversation, "text")
     update_last_conversation_id(idConversation)
     props.setContentText(()=> "")
     props?.sendNewMessage()
@@ -32,7 +33,7 @@ const SendButton = (props) => {
       const voiceResult= await text_to_voice(props?.contentText)
       socketState.emit("message_from_client", {message: voiceResult, roomId: idConversation, sender: data, type_message: "text_to_voice", key: keyMessage, createdAt: new Date(), extend_text: props?.contentText, autoplaying: 0})
       socketState.emit("typing_from_client_off", {roomId: idConversation, data: data, typing: false})
-      post_message(Cookies.get("uid"), idConversation, keyMessage, voiceResult, idConversation, "text_to_voice", "", props?.contentText)
+      post_message(localStorage.getItem("uid"), idConversation, keyMessage, voiceResult, idConversation, "text_to_voice", "", props?.contentText)
       update_last_conversation_id(idConversation)
       props?.setContentText(()=> "")
       props?.sendNewMessage()

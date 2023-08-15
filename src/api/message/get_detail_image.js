@@ -7,7 +7,7 @@ const get_detail_image = async (key) => {
         url: SERVER_URL+ "/api/messages/media/image",
         method: "get",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         params: {
             key

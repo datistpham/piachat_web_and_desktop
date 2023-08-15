@@ -7,10 +7,10 @@ const denied_request_friends = async (id, setData) => {
         url: SERVER_URL+ "/api/users/denied-add-friend/"+ id,
         method: "post",
         data: {
-            userId: Cookies.get("uid")
+            userId: localStorage.getItem("uid")
         },
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

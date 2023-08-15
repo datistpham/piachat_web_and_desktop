@@ -7,10 +7,10 @@ const out_group= async (id_conversation, setData)=> {
         url: SERVER_URL+ "/api/conversations/out-group/"+ id_conversation,
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
-            userId: Cookies.get("uid")
+            userId: localStorage.getItem("uid")
         }
     })
     const result= await res.data

@@ -7,10 +7,10 @@ const cancel_request_make_friend_from_me = async (id, setChange) => {
         url: `${SERVER_URL}/api/users/cancel-add-friend/${id}`,
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
-            userId: Cookies.get("uid")
+            userId: localStorage.getItem("uid")
         }
     })
     const result= await res.data

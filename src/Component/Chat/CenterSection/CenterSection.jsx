@@ -120,7 +120,7 @@ const ComponentMessage = (props) => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       className={`fjdhsjkfhjdkahsjassa ${
-        props?.sender?._id === Cookies.get("uid")
+        props?.sender?._id === localStorage.getItem("uid")
           ? "fjkdjjkdhjfdasdjkhsa"
           : "djskdhjfhsjdahsja"
       }`}
@@ -128,7 +128,7 @@ const ComponentMessage = (props) => {
       <div className={"dfkdsdhsjkfhjkhdadss"} style={{ position: "relative" }}>
         {isFirstMessageInChain ? <Avatar {...props} /> : <NoAvatar />}
         <Text {...props} setOpen={setOpen} reValue={reValue} />
-        {props?.sender?._id === Cookies.get("uid") && (
+        {props?.sender?._id === localStorage.getItem("uid") && (
           <div style={{ position: "relative" }}>
             {open === true &&
               // 2 is recall, 3 is remove
@@ -138,7 +138,7 @@ const ComponentMessage = (props) => {
                   recallMessage={recallMessage}
                   removeMessage={removeMessage}
                   sender={props?.sender?._id}
-                  me={Cookies.get("uid")}
+                  me={localStorage.getItem("uid")}
                 />
               )}
           </div>
@@ -379,7 +379,7 @@ const getFileIcon = (fileName) => {
 };
 
 const Text = (props) => {
-  const isSentByMe = props?.sender?._id === Cookies.get("uid");
+  const isSentByMe = props?.sender?._id === localStorage.getItem("uid");
   //   const fileType = getFileType(props?.message);
 
   return (
@@ -473,7 +473,7 @@ const CompoentViewTextToVoice = (props) => {
   }, [props?.autoplaying]);
 
   useEffect(() => {
-    if (autoplay === 0 && props?.sender?._id !== Cookies.get("uid")) {
+    if (autoplay === 0 && props?.sender?._id !== localStorage.getItem("uid")) {
       const timeout = setTimeout(() => {
         refAudio.current.play();
       }, 1000);

@@ -7,11 +7,11 @@ const deaf_user= async (deaf)=> {
         url: SERVER_URL+ "/api/users/deaf",
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         data: {
             deaf,
-            id_user: Cookies.get("uid")
+            id_user: localStorage.getItem("uid")
         }
     })
     const result= await res.data

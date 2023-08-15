@@ -93,7 +93,7 @@ export const ListFriendItem= (props)=> {
   useEffect(()=> {
     (async ()=> {
       const result= await get_user()
-      let result1= result?.filter(item=> item?._id !== Cookies.get("uid"))
+      let result1= result?.filter(item=> item?._id !== localStorage.getItem("uid"))
       if (!result1 || result1.length === 0) {
         setHasMore(false);
         return;
@@ -189,7 +189,7 @@ export const ListFriendItem2= (props)=> {
   useEffect(()=> {
     (async ()=> {
       const result= await get_user()
-      let result1= result?.filter(item=> item?._id !== Cookies.get("uid"))
+      let result1= result?.filter(item=> item?._id !== localStorage.getItem("uid"))
       if (!result1 || result1.length === 0) {
         return;
       }
@@ -394,7 +394,7 @@ export const PopupAddFriends = (props) => {
           if (data.id_conversation) {
             navigate('/chat/' + data?.id_conversation);
           } else {
-            await make_conversation(undefined, [props?._id, Cookies.get('uid')], Cookies.get('uid'), undefined, setNewConversation, navigate, 0);
+            await make_conversation(undefined, [props?._id, localStorage.getItem('uid')], localStorage.getItem('uid'), undefined, setNewConversation, navigate, 0);
           }
         }} variant="contained" color="primary">Nhắn tin</ButtonMui>
         {/* <Button onClick={unfriend_f} variant="contained" color="secondary">Hủy kết bạn</Button> */}

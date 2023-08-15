@@ -25,7 +25,7 @@ const ChooseFile = (props) => {
     const keyMessage= v4()
     const messageImg= await uploadImageClient(e.target.files[0])
     socketState.emit("message_from_client", {message: messageImg, roomId: idConversation, sender: data, type_message: "image", key: keyMessage, createdAt: new Date()})
-    post_message(Cookies.get("uid"), idConversation, keyMessage, messageImg, idConversation, "image")
+    post_message(localStorage.getItem("uid"), idConversation, keyMessage, messageImg, idConversation, "image")
     update_last_conversation_id(idConversation)
   }
   // send file
@@ -33,13 +33,13 @@ const ChooseFile = (props) => {
     const keyMessage= v4()
     const messageImg= await uploadImageClient(e.target.files[0])
     socketState.emit("message_from_client", {message: messageImg, roomId: idConversation, sender: data, type_message: "file", key: keyMessage,name_file: e.target.files[0].name, createdAt: new Date()})
-    post_message(Cookies.get("uid"), idConversation, keyMessage, messageImg, idConversation, "file", e.target.files[0].name )
+    post_message(localStorage.getItem("uid"), idConversation, keyMessage, messageImg, idConversation, "file", e.target.files[0].name )
     update_last_conversation_id(idConversation)
   }
   // send voice message
   const sendVoiceMessage= async(url)=>{
     socketState.emit("message_from_client", {message: url, roomId: idConversation, sender: data, type_message: "audio", key: v4(), createdAt: new Date()})
-    post_message(Cookies.get("uid"), idConversation, v4(), url, idConversation, "audio", "" )
+    post_message(localStorage.getItem("uid"), idConversation, v4(), url, idConversation, "audio", "" )
   
   }
   return (

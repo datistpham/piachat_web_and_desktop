@@ -7,7 +7,7 @@ const send_voice= async (data)=> {
         url: SERVER_URL+ "/api/conversations/upload/voice",
         method: "post",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken"),
+            "authorization": "Bearer "+ localStorage.getItem("accessToken"),
             "Content-Type": "multipart/form-data"
         },
         data: data

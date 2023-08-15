@@ -10,7 +10,7 @@ const post_message= async (sender, conversation, key, message, roomId, type_mess
             sender, conversation, key, message, roomId, type_message, name_file, extend_text
         },
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         }
     })
     const result= await res.data

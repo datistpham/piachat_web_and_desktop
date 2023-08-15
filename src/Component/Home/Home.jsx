@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import React, { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ import { SocketContainerContext } from "../../SocketContainer/SocketContainer";
 import InComingCall from "../InComingCall/InComingCall";
 import MainScreen from "./MainScreen";
 import Profile from "./Profile";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 // import VideoChatPage from "../VideoChatPage/VideoChatPage";
 import BlockPage from "../BlockPage/BlockPage";
 
@@ -20,9 +20,16 @@ const Home = (props) => {
   const [senderInfo, setSenderInfo] = useState();
   const [callId, setCallId] = useState();
   const [idConversation, setIdConversation]= useState()
-  console.log(data)
+  const navigate= useNavigate()
+  useEffect(()=> {
+    socketState?.on("navigate_chat_from_notification_desktop_to_client", (data)=> {
+      if(localStorage.getItem("appdesktop")== "true") {
+        navigate("/chat/"+ data?.roomId)
+      }
+    })
+  }, [socketState])
   useEffect(() => {
-    socketState?.emit("join_room_self", { meId: Cookies.get("uid") });
+    socketState?.emit("join_room_self", { meId: localStorage.getItem("uid") });
   }, [socketState]);
   useEffect(() => {
     if (data?._id) {

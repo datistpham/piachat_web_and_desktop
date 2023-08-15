@@ -266,7 +266,7 @@ export const PopupAddFriends = (props) => {
                   }}
                 >
                   {/* {
-                                        data?._id !== Cookies.get("uid") && 
+                                        data?._id !== localStorage.getItem("uid") && 
                                         <Button onClick={()=> {}} variant="secondary">Nhắn tin</Button>
                                     } */}
                 </div>
@@ -282,7 +282,7 @@ export const PopupAddFriends = (props) => {
                   }}
                 >
                   {/* {
-                                        data?._id !== Cookies.get("uid") && 
+                                        data?._id !== localStorage.getItem("uid") && 
                                         <Button onClick={()=> send_request_make_friend_by_me(data?._id, setDataSendRequest)} variant="primary">Kết bạn</Button>
                                     }
                                     
@@ -305,7 +305,7 @@ export const PopupAddFriends = (props) => {
                     </Button>
                   )}
                   {friendStatus?.request === false &&
-                    data?._id !== Cookies.get("uid") && (
+                    data?._id !== localStorage.getItem("uid") && (
                       <Button
                         onClick={() => {
                           send_request_make_friend_by_me(

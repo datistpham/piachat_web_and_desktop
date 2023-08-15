@@ -7,7 +7,7 @@ const get_message_conversationid = async (conversationId, setData, query) => {
         url: SERVER_URL+ "/api/messages/"+ conversationId,
         method: "get",
         headers: {
-            "authorization": "Bearer "+ Cookies.get("accessToken")
+            "authorization": "Bearer "+ localStorage.getItem("accessToken")
         },
         params: {
             ...query

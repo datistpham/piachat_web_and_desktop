@@ -24,6 +24,7 @@ const TypingText = (props) => {
         if(e.key=== "Enter") {
           if(e.target.value.trim().length > 0) {
             props?.sendMessage()
+            props?.newestMessage()
           }
         }
       }} onChange={f} value={props.contentText} type="text" style={{width: "100%", height: 40, outlineColor: "#2e89ff", border: "1px solid #e7e7e7", borderRadius: 80, padding: 10}} placeholder={"Nhập tin nhắn..."} />

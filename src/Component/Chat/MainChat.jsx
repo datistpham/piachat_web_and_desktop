@@ -144,10 +144,10 @@ export const TitleMainChat = memo((props) => {
             props.imageGroup
               ? props.imageGroup
               : props?.member?.filter(
-                  (item) => item?._id !== Cookies.get("uid")
+                  (item) => item?._id !== localStorage.getItem("uid")
                 )?.[0]?.profilePicture?.length > 0
               ? props?.member?.filter(
-                  (item) => item?._id !== Cookies.get("uid")
+                  (item) => item?._id !== localStorage.getItem("uid")
                 )?.[0]?.profilePicture
               : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
           }
@@ -167,7 +167,7 @@ export const TitleMainChat = memo((props) => {
           {props.label
             ? props.label
             : props?.member?.filter(
-                (item) => item?._id !== Cookies.get("uid")
+                (item) => item?._id !== localStorage.getItem("uid")
               )?.[0]?.username}
         </div>
         {open === true && (
@@ -225,7 +225,7 @@ export const TitleMainChat = memo((props) => {
                   idConversation,
                   call_id: callId,
                   user_to_call: props?.member?.filter(
-                    (item) => item?._id !== Cookies.get("uid")
+                    (item) => item?._id !== localStorage.getItem("uid")
                   )?.[0]?._id,
                   senderInfo: {
                     profilePicture: data?.profilePicture,
@@ -257,7 +257,7 @@ export const TitleMainChat = memo((props) => {
                   idConversation,
                   call_id: callId,
                   user_to_call: props?.member?.filter(
-                    (item) => item?._id !== Cookies.get("uid")
+                    (item) => item?._id !== localStorage.getItem("uid")
                   )?.[0]?._id,
                   senderInfo: {
                     profilePicture: data?.profilePicture,
@@ -316,7 +316,7 @@ export const PopupAddFriends = (props) => {
 
   useEffect(() => {
     if (props.createdBy) {
-      if (Cookies.get("uid") === props?.createdBy) {
+      if (localStorage.getItem("uid") === props?.createdBy) {
         setIsHostGroup(true);
       } else {
         setIsHostGroup(false);
@@ -332,16 +332,16 @@ export const PopupAddFriends = (props) => {
     if (data2?.duplicate === false) {
       props?.socketState?.emit("send_request_friend", {
         destination_user_id: props?.member?.filter(
-          (item) => item?._id !== Cookies.get("uid")
+          (item) => item?._id !== localStorage.getItem("uid")
         )?.[0]?._id,
-        sender_user_id: Cookies.get("uid"),
+        sender_user_id: localStorage.getItem("uid"),
       });
     }
   }, [data2?.duplicate, props?.member, props?.socketState]);
   useEffect(() => {
     if (
       data?.friends?.includes(
-        props?.member?.filter((item) => item?._id !== Cookies.get("uid"))?.[0]
+        props?.member?.filter((item) => item?._id !== localStorage.getItem("uid"))?.[0]
           ?._id
       ) === true
     ) {
@@ -365,7 +365,7 @@ export const PopupAddFriends = (props) => {
   );
   // eslint-disable-next-line
   const [profileUser, setProfileUser] = useState(
-    props?.member?.filter((item) => item?._id !== Cookies.get("uid"))?.[0]
+    props?.member?.filter((item) => item?._id !== localStorage.getItem("uid"))?.[0]
   );
   const [search, setSearch] = useState("");
   const isSearching = search.length > 0 ? true : false;
@@ -374,7 +374,7 @@ export const PopupAddFriends = (props) => {
   useEffect(() => {
     (async () => {
       const result = await get_friend_status(
-        props?.member?.filter((item) => item?._id !== Cookies.get("uid"))?.[0]
+        props?.member?.filter((item) => item?._id !== localStorage.getItem("uid"))?.[0]
           ?._id
       );
       return setFriendStatus(result);
@@ -384,7 +384,7 @@ export const PopupAddFriends = (props) => {
   useEffect(() => {
     (async () => {
       const result = await get_user();
-      let result1 = result?.filter((item) => item?._id !== Cookies.get("uid"));
+      let result1 = result?.filter((item) => item?._id !== localStorage.getItem("uid"));
       return setDataSearch(result1);
     })();
   }, []);
@@ -441,7 +441,7 @@ export const PopupAddFriends = (props) => {
                   {props.label
                     ? props.label
                     : props?.member?.filter(
-                        (item) => item?._id !== Cookies.get("uid")
+                        (item) => item?._id !== localStorage.getItem("uid")
                       )?.[0]?.username}
                 </div>
                 <div
@@ -466,7 +466,7 @@ export const PopupAddFriends = (props) => {
                   props.imageGroup
                     ? props.imageGroup
                     : props?.member?.filter(
-                        (item) => item?._id !== Cookies.get("uid")
+                        (item) => item?._id !== localStorage.getItem("uid")
                       )?.[0]?.profilePicture
                 }
               />
@@ -475,7 +475,7 @@ export const PopupAddFriends = (props) => {
                   props.label
                     ? props.label
                     : props?.member?.filter(
-                        (item) => item?._id !== Cookies.get("uid")
+                        (item) => item?._id !== localStorage.getItem("uid")
                       )?.[0]?.username
                 }
               />
@@ -509,14 +509,14 @@ export const PopupAddFriends = (props) => {
                     !props?.label &&
                     data?.friends?.includes(
                       props?.member?.filter(
-                        (item) => item?._id !== Cookies.get("uid")
+                        (item) => item?._id !== localStorage.getItem("uid")
                       )?.[0]?._id
                     ) === true && (
                       <Button
                         onClick={() => {
                           unfriend(
                             props?.member?.filter(
-                              (item) => item?._id !== Cookies.get("uid")
+                              (item) => item?._id !== localStorage.getItem("uid")
                             )?.[0]?._id,
                             setData2
                           );
@@ -531,14 +531,14 @@ export const PopupAddFriends = (props) => {
                   {!props?.label &&
                     data?.friends?.includes(
                       props?.member?.filter(
-                        (item) => item?._id !== Cookies.get("uid")
+                        (item) => item?._id !== localStorage.getItem("uid")
                       )?.[0]?._id
                     ) === false && (
                       <>
                         {/* Receive friend request */}
                         {friendsQueue?.includes(
                           props?.member?.filter(
-                            (item) => item?._id !== Cookies.get("uid")
+                            (item) => item?._id !== localStorage.getItem("uid")
                           )?.[0]?._id
                         ) === true && (
                           <>
@@ -549,7 +549,7 @@ export const PopupAddFriends = (props) => {
                               onClick={() =>
                                 accpet_add_friends(
                                   props?.member?.filter(
-                                    (item) => item?._id !== Cookies.get("uid")
+                                    (item) => item?._id !== localStorage.getItem("uid")
                                   )?.[0]?._id,
                                   setData2
                                 )
@@ -565,7 +565,7 @@ export const PopupAddFriends = (props) => {
                               onClick={() =>
                                 denied_request_friends(
                                   props?.member?.filter(
-                                    (item) => item?._id !== Cookies.get("uid")
+                                    (item) => item?._id !== localStorage.getItem("uid")
                                   )?.[0]?._id,
                                   setData2
                                 )
@@ -590,7 +590,7 @@ export const PopupAddFriends = (props) => {
                                 });
                                 cancel_request_make_friend_from_me(
                                   props?.member?.filter(
-                                    (item) => item?._id !== Cookies.get("uid")
+                                    (item) => item?._id !== localStorage.getItem("uid")
                                   )?.[0]?._id,
                                   setChange
                                 );
@@ -605,7 +605,7 @@ export const PopupAddFriends = (props) => {
 
                         {friendsQueue?.includes(
                           props?.member?.filter(
-                            (item) => item?._id !== Cookies.get("uid")
+                            (item) => item?._id !== localStorage.getItem("uid")
                           )?.[0]?._id
                         ) === false &&
                           friendStatus?.request === false && (
@@ -670,7 +670,7 @@ export const PopupAddFriends = (props) => {
                                           send_request_make_friend_by_me(
                                             props?.member?.filter(
                                               (item) =>
-                                                item?._id !== Cookies.get("uid")
+                                                item?._id !== localStorage.getItem("uid")
                                             )?.[0]?._id,
                                             setData2
                                           );
@@ -896,7 +896,7 @@ export const PopupAddFriends = (props) => {
                         <ListMember
                           setResult={props?.setChange}
                           id_conversation={props?.id_conversation}
-                          my_id={Cookies.get("uid")}
+                          my_id={localStorage.getItem("uid")}
                           createdBy={props?.createdBy}
                           is_group={true}
                           isHostGroup={isHostGroup}
@@ -930,7 +930,7 @@ export const PopupAddFriends = (props) => {
                           <ListMember
                             setResult={props?.setChange}
                             id_conversation={props?.id_conversation}
-                            my_id={Cookies.get("uid")}
+                            my_id={localStorage.getItem("uid")}
                             is_group={true}
                             isHostGroup={isHostGroup}
                             key={item?._id || key}

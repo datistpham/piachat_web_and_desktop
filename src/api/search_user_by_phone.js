@@ -5,7 +5,7 @@ const search_user_by_phone= async (phoneNumber, setData)=> {
     const res= await axios({
         url: `${SERVER_URL}/api/users/phone/${phoneNumber}`,
         headers: {
-            "authorization": "Bearer "+Cookies.get("accessToken")
+            "authorization": "Bearer "+localStorage.getItem("accessToken")
         },
         method: "get"
     })

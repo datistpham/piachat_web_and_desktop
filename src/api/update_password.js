@@ -9,7 +9,7 @@ const update_password = async (old_password, new_password) => {
     url: `${SERVER_URL}/api/users/update-password/`,
     method: "post",
     headers: {
-      authorization: `Bearer ${Cookies.get("accessToken")}`,
+      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
     data: {
       old_password,

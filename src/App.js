@@ -4,7 +4,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Component/Login/Login";
 import Signup from "./Component/Signup/Signup";
 import { SERVER_URL } from "./config/config";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { useState } from "react";
 import { createContext } from "react";
 import Home from "./Component/Home/Home";
@@ -27,15 +27,15 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      if(Cookies.get("uid")) {
+      if(localStorage.getItem("uid")) {
         const res = await axios({
-          url: `${SERVER_URL}/api/users/${Cookies.get("uid")}`,
+          url: `${SERVER_URL}/api/users/${localStorage.getItem("uid")}`,
           headers: {
-            Authorization: `Bearer ${Cookies.get("accessToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           method: "get",
           params: {
-            id: Cookies.get("uid"),
+            id: localStorage.getItem("uid"),
           },
         });
         const result = await res.data;
@@ -64,7 +64,6 @@ const App = () => {
                   <Route path={"/login"} element={<Navigate to={"/"} />} />
                   <Route path={"/admin/*"} element={<Admin />} />
                   <Route path="*" element={<NotFound />} />
-                 
                 </>
               }
               {
